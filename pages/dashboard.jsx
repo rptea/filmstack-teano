@@ -7,6 +7,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../config/session";
 import Header from "../components/header";
 import useLogout from "../hooks/useLogout";
+import { useEffect, useState } from "react";
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
@@ -26,6 +27,62 @@ export const getServerSideProps = withIronSessionSsr(
 export default function Dashboard(props) {
   const router = useRouter();
   const logout = useLogout();
+
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [loadingMovies, setLoadingMovies] = useState(true);
+  const [moviesError, setMoviesError] = useState("");
+
+  useEffect(() => {
+    async function fetchSavedMovies() {
+      try {
+        setLoadingMovies(true);
+        setMoviesError("");
+
+        const response = await fetch("/api/movies");
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to load saved movies.");
+        }
+
+        setSavedMovies(data || []);
+      } catch (error) {
+        setMoviesError(
+          error.message || "Unable to load movies right now."
+        );
+      } finally {
+        setLoadingMovies(false);
+      }
+    }
+
+    fetchSavedMovies();
+  }, []);
+
+  async function handleStatusChange(movieId, newStatus) {
+    try {
+      const response = await fetch (`/api/movies/${movieId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to update status.');
+      }
+
+      setSavedMovies((prev) =>
+        prev.map((movie) =>
+          movie._id === movieId ? { ...movie, status: newStatus } : movie )
+      );
+    } catch (error) {
+      alert(error.message || 'Unable to update status right now.')
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -34,7 +91,10 @@ export default function Dashboard(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header isLoggedIn={props.isLoggedIn} username={props.user.username} />
+      <Header 
+        isLoggedIn={props.isLoggedIn} 
+        username={props?.user?.username} 
+      />
 
       <main className={styles.main}>
         <h1 className={styles.title}>
@@ -68,6 +128,68 @@ export default function Dashboard(props) {
             <p>Learn about Next.js in an interactive course with quizzes!</p>
           </div>
         </div>
+
+        {/* movies section */}
+        <section style ={{ marginTop: "3rem", width: "100%" }}>
+          <h2 className={styles.title}>My Saved Movies</h2>
+
+          {loadingMovies && (
+            <p className={styles.description}>Loading saved movies...</p>
+          )}
+
+          {moviesError && (
+            <p className={styles.description}>{moviesError}</p>
+          )}
+
+          {!loadingMovies &&
+            !moviesError &&
+            savedMovies.length === 0 && (
+              <p className={styles.description}>You have not saved any movies yet.</p>
+            )}
+
+            {!loadingMovies &&
+              !moviesError &&
+              savedMovies.length > 0 && (
+                <div className={styles.grid}>
+                  {savedMovies.map((movie) => (
+                    <article key={movie._id} className={styles.card}>
+                      {movie.posterPath ? (
+                        <img
+                          src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`}
+                          alt={`${movie.title} poster`}
+                          width={150}
+                          height={225}
+                        />
+                      ) : (
+                        <div>No poster available</div>
+                      )}
+
+                      <h3>{movie.title}</h3>
+                      <p>
+                        {movie.releaseDate || "Release date unavailable"}
+                      </p>
+                      <label style={{ display: 'block', marginTop: '0.5rem' }}>
+                        Status:{' '}
+                        <select
+                          value={movie.status}
+                          onChange={(e) => handleStatusChange(movie._id, e.target.value)}
+                        >
+                          <option value="want_to_watch">Want to watch</option>
+                          <option value="watched">Watched</option>
+                          <option value="owned">Owned</option>
+                        </select>
+                      </label>
+                      <p>{movie.overview 
+                        ? `${movie.overview.slice(0, 120)}${
+                          movie.overview.length > 120 ? "..." : ""
+                        }`
+                        : "No description available."}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              )}
+        </section>
       </main>
 
       <footer className={styles.footer}>

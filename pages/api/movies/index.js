@@ -7,12 +7,14 @@ async function handler(req, res) {
     await dbConnect();
 
     const sessionUser = req.session.user;
+    console.log('sessionUser:', sessionUser);
 
     if (!sessionUser) {
         return res.status(401).json({ error: 'You must be logged in.' });
     }
 
     const userId = sessionUser._id || sessionUser.id;
+    console.log('resolved userId:', userId);
 
     if (!userId) {
         return res.status(400).json({ error: 'User ID not found in session.' });
@@ -20,9 +22,11 @@ async function handler(req, res) {
 
     if (req.method === 'GET') {
         try {
-            const movies = (await Movie.find({ userId })).toSorted({ createdAt: -1 });
-            return res.statu(200).json(movies);
+            console.log('fetching movies for userId:', userId);
+            const movies = await Movie.find({ userId }).sort({ createdAt: -1 });
+            return res.status(200).json(movies);
         } catch (error) {
+            console.error('GET /api/movies error:', error)
             return res.status(500).json({ error: 'Failed to fetch movies.' });
         }
     }
@@ -43,7 +47,7 @@ async function handler(req, res) {
 
             if (!tmdbId || !title) {
                 return res.status(400).json({
-                    error: 'tmdbId, and title are required.',
+                    error: 'tmdbId and title are required.',
                 });
             }
 
