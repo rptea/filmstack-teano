@@ -25,22 +25,33 @@ async function handler(req, res) {
 
   if (method === 'PATCH') {
     try {
-      const { status } = req.body;
+      const { status, favorite } = req.body;
 
-      if (!status) {
-        return res.status(400).json({ error: 'Status is required.' });
+      const update = {};
+
+      if (typeof status !== 'undefined') {
+        const allowedStatuses = ['want_to_watch', 'watched', 'owned'];
+
+        if (!allowedStatuses.includes(status)) {
+          return res.status(400).json({ error: 'Invalid status value.' });
+        }
+
+        update.status = status;
       }
 
-      const allowedStatuses = ['want_to_watch', 'watched', 'owned'];
-      if (!allowedStatuses.includes(status)) {
+      if (typeof favorite !== 'undefined') {
+        update.favorite = Boolean(favorite);
+      }
+
+      if (Object.keys(update).length === 0) {
         return res
           .status(400)
-          .json({ error: 'Invalid status value.' });
+          .json({ error: 'No valid fields provided to update.' });
       }
 
       const updated = await Movie.findOneAndUpdate(
         { _id: id, userId },
-        { status },
+        update,
         { new: true }
       );
 
@@ -52,9 +63,7 @@ async function handler(req, res) {
 
       return res.status(200).json(updated);
     } catch (error) {
-      return res
-        .status(500)
-        .json({ error: 'Failed to update movie status.' });
+      return res.status(500).json({ error: 'Failed to update movie.' });
     }
   }
 

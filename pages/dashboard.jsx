@@ -31,6 +31,7 @@ export default function Dashboard(props) {
   const [savedMovies, setSavedMovies] = useState([]);
   const [loadingMovies, setLoadingMovies] = useState(true);
   const [moviesError, setMoviesError] = useState("");
+  const [movieFilter, setMovieFilter] = useState("all");
 
   useEffect(() => {
     async function fetchSavedMovies() {
@@ -83,6 +84,39 @@ export default function Dashboard(props) {
     }
   }
 
+  async function handleFavoriteToggle(movieId, currentFavorite) {
+  try {
+    const response = await fetch(`/api/movies/${movieId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ favorite: !currentFavorite }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to update favorite.');
+    }
+
+    setSavedMovies((prev) =>
+      prev.map((movie) =>
+        movie._id === movieId
+          ? { ...movie, favorite: !currentFavorite }
+          : movie
+      )
+    );
+  } catch (error) {
+    alert(error.message || 'Unable to update favorite right now.');
+  }
+} 
+  
+  const filteredMovies =
+    movieFilter === "favorites"
+      ? savedMovies.filter((movie) => movie.favorite)
+      : savedMovies;
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -130,8 +164,33 @@ export default function Dashboard(props) {
         </div>
 
         {/* movies section */}
-        <section style ={{ marginTop: "3rem", width: "100%" }}>
+        <section style={{ marginTop: "3rem", width: "100%" }}>
           <h2 className={styles.title}>My Saved Movies</h2>
+
+          {!loadingMovies && !moviesError && savedMovies.length > 0 && (
+            <div style={{ marginBottom: "1rem" }}>
+              <button
+                type="button"
+                onClick={() => setMovieFilter("all")}
+                style={{
+                  marginRight: "0.5rem",
+                  fontWeight: movieFilter === "all" ? "bold" : "normal",
+                }}
+              >
+                All Movies
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setMovieFilter("favorites")}
+                style={{
+                  fontWeight: movieFilter === "favorites" ? "bold" : "normal",
+                }}
+              >
+                Favorites
+              </button>
+            </div>
+          )}
 
           {loadingMovies && (
             <p className={styles.description}>Loading saved movies...</p>
@@ -144,51 +203,78 @@ export default function Dashboard(props) {
           {!loadingMovies &&
             !moviesError &&
             savedMovies.length === 0 && (
-              <p className={styles.description}>You have not saved any movies yet.</p>
+              <p className={styles.description}>
+                You have not saved any movies yet.
+              </p>
             )}
 
-            {!loadingMovies &&
-              !moviesError &&
-              savedMovies.length > 0 && (
-                <div className={styles.grid}>
-                  {savedMovies.map((movie) => (
-                    <article key={movie._id} className={styles.card}>
-                      {movie.posterPath ? (
-                        <img
-                          src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`}
-                          alt={`${movie.title} poster`}
-                          width={150}
-                          height={225}
-                        />
-                      ) : (
-                        <div>No poster available</div>
-                      )}
+          {!loadingMovies &&
+            !moviesError &&
+            savedMovies.length > 0 &&
+            filteredMovies.length === 0 && (
+              <p className={styles.description}>
+                You do not have any favorite movies yet.
+              </p>
+            )}
 
-                      <h3>{movie.title}</h3>
-                      <p>
-                        {movie.releaseDate || "Release date unavailable"}
-                      </p>
-                      <label style={{ display: 'block', marginTop: '0.5rem' }}>
-                        Status:{' '}
-                        <select
-                          value={movie.status}
-                          onChange={(e) => handleStatusChange(movie._id, e.target.value)}
-                        >
-                          <option value="want_to_watch">Want to watch</option>
-                          <option value="watched">Watched</option>
-                          <option value="owned">Owned</option>
-                        </select>
-                      </label>
-                      <p>{movie.overview 
+          {!loadingMovies &&
+            !moviesError &&
+            filteredMovies.length > 0 && (
+              <div className={styles.grid}>
+                {filteredMovies.map((movie) => (
+                  <article key={movie._id} className={styles.card}>
+                    {movie.posterPath ? (
+                      <img
+                        src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`}
+                        alt={`${movie.title} poster`}
+                        width={150}
+                        height={225}
+                      />
+                    ) : (
+                      <div>No poster available</div>
+                    )}
+
+                    <h3>{movie.title}</h3>
+
+                    <p>
+                      {movie.releaseDate || "Release date unavailable"}
+                    </p>
+
+                    <label style={{ display: "block", marginTop: "0.5rem" }}>
+                      Status:{" "}
+                      <select
+                        value={movie.status}
+                        onChange={(e) =>
+                          handleStatusChange(movie._id, e.target.value)
+                        }
+                      >
+                        <option value="want_to_watch">Want to watch</option>
+                        <option value="watched">Watched</option>
+                        <option value="owned">Owned</option>
+                      </select>
+                    </label>
+
+                    <button
+                      type="button"
+                      style={{ marginTop: "0.5rem" }}
+                      onClick={() =>
+                        handleFavoriteToggle(movie._id, movie.favorite)
+                      }
+                    >
+                      {movie.favorite ? "Unfavorite" : "Favorite"}
+                    </button>
+
+                    <p>
+                      {movie.overview
                         ? `${movie.overview.slice(0, 120)}${
-                          movie.overview.length > 120 ? "..." : ""
-                        }`
+                            movie.overview.length > 120 ? "..." : ""
+                          }`
                         : "No description available."}
-                      </p>
-                    </article>
-                  ))}
-                </div>
-              )}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            )}
         </section>
       </main>
 
