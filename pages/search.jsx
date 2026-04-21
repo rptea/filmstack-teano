@@ -38,6 +38,39 @@ export default function SearchPage() {
     }
   };
 
+  const handleSaveMovie = async (movie) => {
+    
+    try {
+      const response = await fetch('/api/movies', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          tmdbId: movie.id,
+          title: movie.title,
+          posterPath: movie.poster_path || '',
+          releaseDate: movie.release_date || '',
+          overview: movie.overview || '',
+          status: 'want_to_watch',
+          rating: null,
+          notes: '',
+          favorite: false,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to save movie.');
+      }
+
+      alert(`${movie.title} was saved successfully.`);
+    } catch (error) {
+      alert(error.message || 'Unable to save movie right now.');
+    }
+  };
+
   return (
     <main className={styles.page}>
       <div className={styles.container}>
@@ -101,7 +134,13 @@ export default function SearchPage() {
                         : "No description available."}
                     </p>
 
-                    <button className={styles.saveButton}>Save Movie</button>
+                    <button
+                      type="button"
+                      className={styles.saveButton}
+                      onClick={() => handleSaveMovie(movie)}
+                    >
+                      Save Movie
+                    </button>
                   </div>
                 </article>
               ))}
