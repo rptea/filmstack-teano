@@ -15,22 +15,33 @@
 }
 
 .footer {
-  display: flex;
-  flex: 1;
+  width: 100%;
+  margin-top: 4rem;
   padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer a {
+  border-top: 1px solid #e5e7eb;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-grow: 1;
 }
 
-/* Typography */
+.footerContent {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+.footerBrand {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.footerText {
+  margin: 0/5rem 0 0;
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
 
 .title a {
   color: #0070f3;
@@ -69,8 +80,6 @@
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
-/* Generic grid + card (for top links) */
-
 .grid {
   display: flex;
   justify-content: center;
@@ -108,8 +117,6 @@
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
 
-/* Forms (generic) */
-
 .form {
   display: flex;
   flex-direction: column;
@@ -129,8 +136,6 @@
   color: #fafafa;
   background-color: #222;
 }
-
-/* Movies section */
 
 .movieSection {
   margin-top: 3rem;
@@ -174,8 +179,6 @@
   width: 100%;
   margin-top: 1.5rem;
 }
-
-/* Movie cards */
 
 .movieCard {
   border-radius: 16px;
@@ -223,8 +226,6 @@
   font-size: 0.95rem;
 }
 
-/* Inputs inside cards */
-
 .select,
 .textarea {
   width: 100%;
@@ -248,8 +249,6 @@
   resize: vertical;
   min-height: 90px;
 }
-
-/* Buttons inside cards */
 
 .actionRow {
   display: flex;
@@ -299,8 +298,6 @@
   margin: 0.25rem 0 0;
 }
 
-/* Modal */
-
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -344,15 +341,6 @@
   line-height: 1.6;
 }
 
-/* Logo */
-
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
-}
-
-/* Responsive tweaks */
-
 @media (max-width: 600px) {
   .grid {
     width: 100%;
@@ -373,45 +361,5 @@
 
   .movieTitle {
     font-size: 1.1rem;
-  }
-}
-
-/* Dark mode */
-
-@media (prefers-color-scheme: dark) {
-  .card,
-  .footer,
-  .movieCard {
-    border-color: #222;
-    background: #111827;
-    color: #e5e7eb;
-  }
-
-  .code {
-    background: #111;
-  }
-
-  .logo img {
-    filter: invert(1);
-  }
-
-  .movieMeta {
-    color: #9ca3af;
-  }
-
-  .movieOverview {
-    color: #d1d5db;
-  }
-
-  .modalContent {
-    background: #111827;
-    color: #e5e7eb;
-  }
-
-  .select,
-  .textarea {
-    background: #020617;
-    color: #e5e7eb;
-    border-color: #374151;
   }
 }

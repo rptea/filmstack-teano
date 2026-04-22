@@ -95,35 +95,3 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .header {
-    border-bottom: 1px solid #222;
-  }
-
-  .brand {
-    color: #f3f4f6;
-  }
-
-  .navLink {
-    color: #d1d5db;
-  }
-
-  .navLink:hover,
-  .navLink:focus {
-    color: #60a5fa;
-  }
-
-  .welcome {
-    color: #9ca3af;
-  }
-
-  .logoutButton {
-    background: #1f2937;
-    color: #f9fafb;
-  }
-
-  .loginButton {
-    background: #2563eb;
-    color: white;
-  }
-}
