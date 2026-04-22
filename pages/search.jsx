@@ -1,157 +1,140 @@
+import Head from "next/head";
 import { useState } from "react";
-import styles from "../styles/Search.module.css";
+import Header from "../components/header";
+import SearchBar from "../components/search-bar";
+import styles from "../styles/Home.module.css";
+import Link from "next/link";
 
-export default function SearchPage() {
-  const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
+export default function Search(props) {
+  const [results, setResults] = useState([]);
+  const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  async function handleSearch(query) {
+  setLoading(true);
+  setError("");
+  setSearched(true);
 
-    if (!query.trim()) {
-      setError("Please enter a movie title.");
-      setMovies([]);
-      return;
+  try {
+    const res = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
+    const text = await res.text();
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error("API returned HTML instead of JSON.");
     }
 
-    try {
-      setLoading(true);
-      setError("");
-
-      const response = await fetch(
-        `/api/tmdb/search?query=${encodeURIComponent(query)}`
-      );
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Something went wrong while searching.");
-      }
-
-      setMovies(data.results || []);
-    } catch (err) {
-      setError(err.message || "Unable to search movies right now.");
-      setMovies([]);
-    } finally {
-      setLoading(false);
+    if (!res.ok) {
+      throw new Error(data.error || "Search failed.");
     }
-  };
 
-  const handleSaveMovie = async (movie) => {
-    
+    setResults(data.results || []);
+  } catch (err) {
+    setError(err.message || "Something went wrong.");
+    setResults([]);
+  } finally {
+    setLoading(false);
+  }
+}
+  async function handleSaveMovie(movie) {
     try {
-      const response = await fetch('/api/movies', {
-        method: 'POST',
+      const res = await fetch("/api/movies", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           tmdbId: movie.id,
           title: movie.title,
-          posterPath: movie.poster_path || '',
-          releaseDate: movie.release_date || '',
-          overview: movie.overview || '',
-          status: 'want_to_watch',
-          rating: null,
-          notes: '',
-          favorite: false,
+          overview: movie.overview,
+          posterPath: movie.poster_path,
+          releaseDate: movie.release_date,
         }),
       });
 
-      const data = await response.json();
+      const data = await res.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to save movie.');
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to save movie.");
       }
 
-      alert(`${movie.title} was saved successfully.`);
-    } catch (error) {
-      alert(error.message || 'Unable to save movie right now.');
+      alert("Movie saved!");
+    } catch (err) {
+      alert(err.message || "Something went wrong.");
     }
-  };
+  }
 
   return (
-    <main className={styles.page}>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Search Movies</h1>
-        <p className={styles.description}>
-          Search for movies and save them to your tracker.
-        </p>
+    <div className={styles.container}>
+      <Head>
+        <title>Search | Filmstack</title>
+        <meta name="description" content="Search for movies on Filmstack." />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <label htmlFor="movie-search" className={styles.label}>
-            Movie title
-          </label>
+      <Header isLoggedIn={props?.isLoggedIn} username={props?.user?.username} />
 
-          <div className={styles.searchRow}>
-            <input
-              id="movie-search"
-              type="text"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search by title..."
-              className={styles.input}
-            />
-            <button type="submit" className={styles.button}>
-              Search
-            </button>
-          </div>
-        </form>
+      <main className={styles.main}>
+        <section className={styles.heroSection}>
+          <p className={styles.heroTag}>Movie search</p>
+          <h1 className={styles.heroTitle}>Find movies to add to your tracker</h1>
+          <p className={styles.heroText}>
+            Search for a title and browse movie results.
+          </p>
+        </section>
 
-        {loading && <p className={styles.message}>Loading results...</p>}
-        {error && <p className={styles.error}>{error}</p>}
+        <div className={styles.searchActions}>
+          <Link href="/dashboard" className={styles.secondaryButton}>
+            Got to Dashboard
+          </Link>
+        </div>
+        <SearchBar onSearch={handleSearch} />
 
-        {!loading && !error && movies.length > 0 && (
-          <section className={styles.results}>
-            <h2 className={styles.resultsTitle}>Results</h2>
+        {loading && <p className={styles.authText}>Searching...</p>}
+        {error && <p className={styles.authError}>{error}</p>}
 
-            <div className={styles.grid}>
-              {movies.map((movie) => (
-                <article key={movie.id} className={styles.card}>
-                  {movie.poster_path ? (
-                    <img
-                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                      alt={`${movie.title} poster`}
-                      className={styles.poster}
-                    />
-                  ) : (
-                    <div className={styles.noPoster}>No poster available</div>
-                  )}
-
-                  <div className={styles.cardContent}>
-                    <h3 className={styles.movieTitle}>{movie.title}</h3>
-
-                    <p className={styles.releaseDate}>
-                      {movie.release_date || "Release date unavailable"}
-                    </p>
-
-                    <p className={styles.overview}>
-                      {movie.overview
-                        ? `${movie.overview.slice(0, 140)}${
-                            movie.overview.length > 140 ? "..." : ""
-                          }`
-                        : "No description available."}
-                    </p>
-
-                    <button
-                      type="button"
-                      className={styles.saveButton}
-                      onClick={() => handleSaveMovie(movie)}
-                    >
-                      Save Movie
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
+        {searched && !loading && results.length === 0 && !error && (
+          <p className={styles.authText}>No movies found.</p>
         )}
 
-        {!loading && !error && query && movies.length === 0 && (
-          <p className={styles.message}>No movies found.</p>
-        )}
-      </div>
-    </main>
+        <section className={styles.infoGrid}>
+          {results.map((movie) => (
+            <article key={movie.id} className={styles.infoCard}>
+              {movie.poster_path ? (
+                <img 
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={`$movie.title} poster`}
+                  className={styles.searchPoster}
+                />
+              ) : (
+                <div className={styles.posterFallback}>No Poster</div>
+              )}
+              
+              <h2>{movie.title}</h2>
+
+              <p className={styles.movieMeta}>
+                {movie.release_date || "No release date"}
+              </p>
+              <p>
+                {movie.overview
+                  ? movie.overview.slice(0, 160) + "..."
+                  : "No overview available."}
+              </p>
+
+              <button
+                type="button"
+                className={styles.saveButton}
+                onClick={() => handleSaveMovie(movie)}
+              >
+                Save Movie
+              </button>
+            </article>
+          ))}
+        </section>
+      </main>
+    </div>
   );
 }

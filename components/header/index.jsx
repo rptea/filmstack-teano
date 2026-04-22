@@ -17,6 +17,10 @@ export default function Header(props) {
           Home
         </Link>
 
+        <Link href="/search" className={styles.navLink}>
+          Search
+        </Link>
+
         {props.isLoggedIn && (
           <Link href="/dashboard" className={styles.navLink}>
             Dashboard
