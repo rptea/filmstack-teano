@@ -32,6 +32,8 @@ export default function Dashboard(props) {
   const [loadingMovies, setLoadingMovies] = useState(true);
   const [moviesError, setMoviesError] = useState("");
   const [movieFilter, setMovieFilter] = useState("all");
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function fetchSavedMovies() {
@@ -198,6 +200,16 @@ export default function Dashboard(props) {
       }
     }
 
+  function openMovieModal(movie) {
+    setSelectedMovie(movie);
+    setIsModalOpen(true);
+  }
+
+  function closeMovieModal() {
+    setSelectedMovie(null);
+    setIsModalOpen(false);
+  }
+    
   return (
     <div className={styles.container}>
       <Head>
@@ -303,7 +315,12 @@ export default function Dashboard(props) {
             filteredMovies.length > 0 && (
               <div className={styles.grid}>
                 {filteredMovies.map((movie) => (
-                  <article key={movie._id} className={styles.card}>
+                  <article 
+                    key={movie._id}
+                    className={styles.card}
+                    onClick={() => openMovieModal(movie)}
+                    style={{ cursor: "pointer"}}
+                  >
                     {movie.posterPath ? (
                       <img
                         src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`}
@@ -324,6 +341,7 @@ export default function Dashboard(props) {
                       Status:{" "}
                       <select
                         value={movie.status}
+                        onClick={(e) => e.stopPropagation()}
                         onChange={(e) =>
                           handleStatusChange(movie._id, e.target.value)
                         }
@@ -338,6 +356,7 @@ export default function Dashboard(props) {
                       Rating:{" "}
                       <select 
                         value={movie.rating ?? ""}
+                        onClick={(e) => e.stopPropagation()}
                         onChange={(e) =>
                           handleRatingChange(movie._id, e.target.value)
                         }
@@ -354,9 +373,10 @@ export default function Dashboard(props) {
                     <button
                       type="button"
                       style={{ marginTop: "0.5rem" }}
-                      onClick={() =>
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleFavoriteToggle(movie._id, movie.favorite)
-                      }
+                      }}
                     >
                       {movie.favorite ? "Unfavorite" : "Favorite"}
                     </button>
@@ -364,7 +384,10 @@ export default function Dashboard(props) {
                     <button
                       type="button"
                       style={{ marginTop: "0.5rem" }}
-                      onClick={() => handleDeleteMovie(movie._id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteMovie(movie._id)
+                      }}
                     >
                       Delete Movie
                     </button>
@@ -373,6 +396,7 @@ export default function Dashboard(props) {
                       Notes:
                       <textarea
                         value={movie.notes ?? ""}
+                        onClick={(e) => e.stopPropagation()}
                         onChange={(e) =>
                           handleNotesChange(movie._id, e.target.value)
                         }
@@ -398,6 +422,83 @@ export default function Dashboard(props) {
               </div>
             )}
         </section>
+        {isModalOpen && (
+          <div
+            onClick={closeMovieModal}
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.7)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "1rem",
+              zIndex: 1000,
+            }}
+          >
+            <div 
+              onAbort={(e) => e.stopPropagation()}
+              style={{
+                backgroundColor: "white",
+                color: "black",
+                padding: "1.5rem",
+                borderRadius: "12px",
+                maxWidth: "700px",
+                width: "100%",
+                maxHeight: "90vh",
+                overflowY: "auto"
+              }}
+
+            >
+              <button
+                type="button"
+                onClick={closeMovieModal}
+                style={{
+                  float: "right",
+                  fontSize: "1.2rem",
+                  cursor: "pointer",
+                }}
+              >
+                X
+              </button>
+
+              <h2 style={{ marginTop: 0 }}>{selectedMovie.title}</h2>
+
+              {selectedMovie.posterPath && (
+                <img 
+                  src={`https://image.tmdb.org/t/p/w500${selectedMovie.posterPath}`}
+                  alt={`${selectedMovie.title} poster`}
+                  width={200}
+                  height={300}
+                  style={{ marginBottom: "1rem" }}
+                />
+              )}
+
+                <p>
+                  <strong> Release Date:</strong>{" "}
+                  {selectedMovie.releaseDate || "Unavailable"}
+                </p>
+
+                <p>
+                  <strong>Rating:</strong>{" "}
+                  {selectedMovie.rating || "Not rated"}
+                </p>
+
+                <p>
+                  <strong>Notes:</strong>{" "}
+                  {selectedMovie.notes || "No notes added yet."} 
+                </p>
+
+                <p>
+                  <strong>Overview:</strong>{" "}
+                  {selectedMovie.overview || "No description available."}
+                </p>
+            </div>
+          </div>
+        )}
       </main>
 
       <footer className={styles.footer}>
