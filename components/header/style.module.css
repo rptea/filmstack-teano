@@ -31,6 +31,11 @@
   text-decoration: none;
 }
 
+.brand:hover,
+.brand:focus {
+  opacity: 0.9s;
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -64,7 +69,12 @@
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+  transition: 
+    transform 0.2s ease, 
+    opacity 0.2s ease, 
+    background-color 0.2s ease
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .loginButton {
@@ -81,6 +91,15 @@
 .logoutButton:hover {
   transform: translateY(-1px);
   opacity: 0.95;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+}
+
+.loginButton:focus,
+.logoutButton:focus,
+.navLink:focus,
+.brand:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,112,243, 0.18);
 }
 
 @media (max-width: 700px) {
@@ -89,8 +108,11 @@
     align-items: flex-start;
   }
 
+  .left,
   .right {
     width: 100%;
+  }
+  .right {
     justify-content: space-between;
   }
 }

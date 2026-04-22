@@ -1,12 +1,13 @@
-/* Layout */
-
 .container {
   padding: 0 2rem;
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #111827;
 }
 
 .main {
   min-height: 100vh;
-  padding: 4rem 0;
+  padding: 3rem 0 4rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -18,9 +19,10 @@
   width: 100%;
   margin-top: 4rem;
   padding: 2rem 0;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #dbe3ea;
   display: flex;
   justify-content: center;
+  background: #f8fafc
 }
 
 .footerContent {
@@ -39,13 +41,14 @@
 .footerText {
   margin: 0/5rem 0 0;
   font-size: 0.95rem;
-  color: #6b7280;
+  color: #475467;
   line-height: 1.5;
 }
 
 .title a {
   color: #0070f3;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .title a:hover,
@@ -58,6 +61,7 @@
   margin: 0;
   line-height: 1.15;
   font-size: 2.5rem;
+  color: #111827
 }
 
 .title,
@@ -72,10 +76,10 @@
 }
 
 .code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
+  background: #eef2f7;
+  border-radius: 8px;
+  padding: 0.65rem 0.8rem;
+  font-size: 1rem;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
@@ -91,30 +95,38 @@
   margin: 1rem;
   padding: 1.5rem;
   text-align: left;
-  color: inherit;
+  color: #111827;
   text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-  max-width: 350px;
+  border: 1px solid #dbe3ea;
+  border-radius: 14px;
   background: #ffffff;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    background-color 0.2s ease;
+  max-width: 350px;
 }
 
 .card h2 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
+  color: #111827;
 }
 
 .card p {
   margin: 0;
   font-size: 1.1rem;
   line-height: 1.5;
+  color: #475467;
 }
 
 .card:is(:hover, :focus, :active) {
-  color: #0070f3;
-  border-color: #0070f3;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  color: #111827;
+  border-color: #bfd5ea;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+  transform: translateY(-2px);
 }
 
 .form {
@@ -129,12 +141,17 @@
 
 .form > button {
   cursor: pointer;
-  transition: 0.15s ease;
+  transition: 
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .form > button:is(:hover, :focus, :active) {
   color: #fafafa;
-  background-color: #222;
+  background-color: #111827;
 }
 
 .movieSection {
@@ -159,7 +176,13 @@
   color: #1f3c88;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: 
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .filterButton:hover {
@@ -183,17 +206,21 @@
 .movieCard {
   border-radius: 16px;
   padding: 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #dbe3ea;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
   background: #ffffff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: 
+    transform 0.2s ease,
+    box-shadow 0.2s ease
+    border-color 0.2s ease;
 }
 
 .movieCard:hover {
   transform: translateY(-4px);
+  border-color: #bfd5ea;
   box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
 }
 
@@ -214,7 +241,7 @@
 
 .movieMeta {
   font-size: 0.95rem;
-  color: #6b7280;
+  color: #667085;
   margin: 0;
 }
 
@@ -229,20 +256,23 @@
 .select,
 .textarea {
   width: 100%;
-  margin-top: 0.35rem;
-  padding: 0.65rem 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  background: #fff;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid #cfd8e3;
+  border-radius: 12px;
+  font-size: 1rem;
   color: #111827;
+  background: #ffffff;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .select:focus,
 .textarea:focus {
   outline: none;
   border-color: #0070f3;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.18)
 }
 
 .textarea {
@@ -266,12 +296,22 @@
   font-weight: 600;
   cursor: pointer;
   font-size: 0.95rem;
-  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  transition: 
+    transform 0.2s ease, 
+    opacity 0.2s ease, 
+    box-shadow 0.2s ease;
 }
 
 .favoriteButton {
   background: #fef3c7;
   color: #92400e;
+  transition: 
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .favoriteButton:hover {
@@ -283,6 +323,13 @@
 .deleteButton {
   background: #fee2e2;
   color: #b91c1c;
+  transition: 
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .deleteButton:hover {
@@ -294,14 +341,14 @@
 .movieOverview {
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #374151;
+  color: #475467;
   margin: 0.25rem 0 0;
 }
 
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(17, 24, 39, 0.72);
+  background: rgba(15, 23, 42, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -318,7 +365,7 @@
   overflow-y: auto;
   border-radius: 18px;
   padding: 1.5rem;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.18);
   position: relative;
 }
 
@@ -326,6 +373,13 @@
   background: #111827;
   color: white;
   margin-bottom: 1rem;
+  transition: 
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .modalPoster {
@@ -370,7 +424,7 @@
   max-width: 700px;
   font-size: 1.1rem;
   line-height: 1.7;
-  color: #4b5563;
+  color: #475467;
 }
 
 .heroActions {
@@ -392,7 +446,13 @@
   text-decoration: none;
   cursor: pointer;
   border: none;
-  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+  transition: 
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .primaryButton {
@@ -466,7 +526,7 @@
 
 .authText {
   margin: 0 0 1.5rem;
-  color: #6b7280;
+  color: #475467;
   line-height: 1.6;
 }
 
@@ -485,11 +545,15 @@
 .authInput {
   width: 100%;
   padding: 0.85rem 0.95rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid #cfd8e3;
   border-radius: 12px;
   font-size: 1rem;
   color: #111827;
-  background: white;
+  background: #ffffff;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .authInput:focus {
@@ -508,7 +572,13 @@
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: 
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .authButton:hover {
