@@ -25,7 +25,7 @@ async function handler(req, res) {
 
   if (method === 'PATCH') {
     try {
-      const { status, favorite, rating } = req.body;
+      const { status, favorite, rating, notes } = req.body;
 
       const update = {};
 
@@ -52,6 +52,10 @@ async function handler(req, res) {
         }
 
         update.rating = numericRating;
+      }
+
+      if (typeof notes !== 'undefined') {
+        update.notes = String(notes).trim();
       }
 
       if (Object.keys(update).length === 0) {

@@ -41,7 +41,6 @@ const MovieSchema = new mongoose.Schema (
         },
         notes: {
             type: String,
-            trim: true,
             default: '',
         },
         favorite: {

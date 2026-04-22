@@ -172,6 +172,32 @@ export default function Dashboard(props) {
     }
   }
 
+    async function handleNotesChange(movieId, newNotes) {
+      try {
+        const response = await fetch(`/api/movies/${movieId}`, {
+          method: "PATCH",
+          headers: {
+            "content-Type": "application/json",
+          },
+          body: JSON.stringify({ notes: newNotes }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to updated notes.");
+        }
+
+        setSavedMovies((prev) =>
+          prev.map((movie) =>
+            movie._id === movieId ? { ...movie, notes: newNotes } : movie 
+          )
+        );
+      } catch (error) {
+        alert(error.message || "Unable to update notes right now.");
+      }
+    }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -342,6 +368,23 @@ export default function Dashboard(props) {
                     >
                       Delete Movie
                     </button>
+
+                    <label style={{ display: "block", marginTop: "0.75rem" }}>
+                      Notes:
+                      <textarea
+                        value={movie.notes ?? ""}
+                        onChange={(e) =>
+                          handleNotesChange(movie._id, e.target.value)
+                        }
+                        rows={3}
+                        style={{
+                          width: "100%",
+                          marginTop: "0.25rem",
+                          resize: "vertical",
+                        }}
+                        placeholder="Add your thoughts or a short review..."
+                      />
+                    </label>
 
                     <p>
                       {movie.overview
