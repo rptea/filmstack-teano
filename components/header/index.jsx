@@ -4,31 +4,48 @@ import useLogout from "../../hooks/useLogout";
 
 export default function Header(props) {
   const logout = useLogout();
+
   return (
-    <header className={styles.container}>
-      {props.isLoggedIn ? (
-        <>
-          <p>
-            <Link href="/">Home</Link>
-          </p>
-          <div className={styles.container}>
-            <p>Welcome, {props.username}!</p>
-            <p onClick={logout} style={{ cursor: "pointer" }}>
+    <header className={styles.header}>
+      <div className={styles.left}>
+        <Link href="/" className={styles.brand}>
+          FilmStack
+        </Link>
+
+        <nav className={styles.nav}>
+          <Link href="/" className={styles.navLink}>
+          Home
+        </Link>
+
+        {props.isLoggedIn && (
+          <Link href="/dashboard" className={styles.navLink}>
+            Dashboard
+          </Link>
+        )}
+        </nav>
+      </div>
+
+      <div className={styles.right}>
+        {props.isLoggedIn ? (
+          <>
+            <span className={styles.welcome}>
+              Welcome, {props.username}!
+            </span>
+            
+            <button
+              type="button"
+              className={styles.logoutButton}
+              onClick={logout}
+            >
               Logout
-            </p>
-          </div>
-        </>
-      ) : (
-        <>
-          <p>
-            <Link href="/">Home</Link>
-          </p>
-          <p>
-            <Link href="/login">Login</Link>
-          </p>
-        </>
-      )}
+            </button>
+          </>
+        ) : (
+          <Link href="/login" className={styles.loginButton}>
+            Login
+          </Link>
+        )}
+      </div>
     </header>
   );
 }
-

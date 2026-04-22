@@ -257,18 +257,17 @@ export default function Dashboard(props) {
         </div>
 
         {/* movies section */}
-        <section style={{ marginTop: "3rem", width: "100%" }}>
+        <section className={ styles.movieSection}>
           <h2 className={styles.title}>My Saved Movies</h2>
 
           {!loadingMovies && !moviesError && savedMovies.length > 0 && (
-            <div style={{ marginBottom: "1rem" }}>
+            <div className={styles.filterBar}>
               <button
                 type="button"
                 onClick={() => setMovieFilter("all")}
-                style={{
-                  marginRight: "0.5rem",
-                  fontWeight: movieFilter === "all" ? "bold" : "normal",
-                }}
+                className={`${styles.filterButton} ${
+                  movieFilter === "all" ? styles.activeFilter : ""
+                }`}
               >
                 All Movies
               </button>
@@ -276,9 +275,9 @@ export default function Dashboard(props) {
               <button
                 type="button"
                 onClick={() => setMovieFilter("favorites")}
-                style={{
-                  fontWeight: movieFilter === "favorites" ? "bold" : "normal",
-                }}
+                className={`${styles.filterButton} ${
+                  movieFilter === "favorites" ? styles.activeFilter : ""
+                }`}
               >
                 Favorites
               </button>
@@ -323,23 +322,25 @@ export default function Dashboard(props) {
                   >
                     {movie.posterPath ? (
                       <img
+                        className={styles.moviePoster}
                         src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`}
                         alt={`${movie.title} poster`}
                         width={150}
                         height={225}
                       />
                     ) : (
-                      <div>No poster available</div>
+                      <div className={styles.movieMeta}>No poster available</div>
                     )}
 
-                    <h3>{movie.title}</h3>
+                    <h3 className={styles.movieTitle}>{movie.title}</h3>
 
-                    <p>
+                    <p className={styles.movieMeta}>
                       {movie.releaseDate || "Release date unavailable"}</p>
 
-                    <label style={{ display: "block", marginTop: "0.5rem" }}>
-                      Status:{" "}
+                    <label className={styles.fieldLabel}>
+                      Status:
                       <select
+                        className={styles.select}
                         value={movie.status}
                         onClick={(e) => e.stopPropagation()}
                         onChange={(e) =>
@@ -352,9 +353,10 @@ export default function Dashboard(props) {
                       </select>
                     </label>
 
-                    <label style={{ display: "block", marginTop: "0.5rem" }}>
-                      Rating:{" "}
+                    <label className={styles.fieldLabel}>
+                      Rating:
                       <select 
+                        className={styles.select}
                         value={movie.rating ?? ""}
                         onClick={(e) => e.stopPropagation()}
                         onChange={(e) =>
@@ -370,47 +372,45 @@ export default function Dashboard(props) {
                       </select>
                     </label>
 
-                    <button
-                      type="button"
-                      style={{ marginTop: "0.5rem" }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleFavoriteToggle(movie._id, movie.favorite)
-                      }}
-                    >
-                      {movie.favorite ? "Unfavorite" : "Favorite"}
-                    </button>
+                    <div className={styles.actionRow}>
+                      <button
+                        type="button"
+                        className={styles.favoriteButton}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleFavoriteToggle(movie._id, movie.favorite)
+                        }}
+                      >
+                        {movie.favorite ? "Unfavorite" : "Favorite"}
+                      </button>
 
-                    <button
-                      type="button"
-                      style={{ marginTop: "0.5rem" }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteMovie(movie._id)
-                      }}
-                    >
-                      Delete Movie
-                    </button>
+                      <button
+                        type="button"
+                        className={styles.deleteButton}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteMovie(movie._id)
+                        }}
+                      >
+                        Delete Movie
+                      </button>
+                    </div>
 
-                    <label style={{ display: "block", marginTop: "0.75rem" }}>
+                    <label className={styles.fieldLabel}>
                       Notes:
                       <textarea
+                        className={styles.textarea}
                         value={movie.notes ?? ""}
                         onClick={(e) => e.stopPropagation()}
                         onChange={(e) =>
                           handleNotesChange(movie._id, e.target.value)
                         }
                         rows={3}
-                        style={{
-                          width: "100%",
-                          marginTop: "0.25rem",
-                          resize: "vertical",
-                        }}
                         placeholder="Add your thoughts or a short review..."
                       />
                     </label>
 
-                    <p>
+                    <p className={styles.movieOverview}>
                       {movie.overview
                         ? `${movie.overview.slice(0, 120)}${
                             movie.overview.length > 120 ? "..." : ""
@@ -422,53 +422,29 @@ export default function Dashboard(props) {
               </div>
             )}
         </section>
+
         {isModalOpen && (
           <div
+            className={styles.modalOverlay}
             onClick={closeMovieModal}
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.7)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: "1rem",
-              zIndex: 1000,
-            }}
           >
             <div 
-              onAbort={(e) => e.stopPropagation()}
-              style={{
-                backgroundColor: "white",
-                color: "black",
-                padding: "1.5rem",
-                borderRadius: "12px",
-                maxWidth: "700px",
-                width: "100%",
-                maxHeight: "90vh",
-                overflowY: "auto"
-              }}
-
+              className={styles.modalContent}
+              onClick={(e) => e.stopPropagation()}
             >
               <button
                 type="button"
+                className={styles.closeButton}
                 onClick={closeMovieModal}
-                style={{
-                  float: "right",
-                  fontSize: "1.2rem",
-                  cursor: "pointer",
-                }}
               >
-                X
+                Close
               </button>
 
-              <h2 style={{ marginTop: 0 }}>{selectedMovie.title}</h2>
+              <h2 className={styles.movieTitle}>{selectedMovie.title}</h2>
 
               {selectedMovie.posterPath && (
                 <img 
+                  className={styles.modalPoster}
                   src={`https://image.tmdb.org/t/p/w500${selectedMovie.posterPath}`}
                   alt={`${selectedMovie.title} poster`}
                   width={200}
@@ -477,6 +453,7 @@ export default function Dashboard(props) {
                 />
               )}
 
+              <div className={styles.modalText}>
                 <p>
                   <strong> Release Date:</strong>{" "}
                   {selectedMovie.releaseDate || "Unavailable"}
@@ -496,6 +473,7 @@ export default function Dashboard(props) {
                   <strong>Overview:</strong>{" "}
                   {selectedMovie.overview || "No description available."}
                 </p>
+              </div>
             </div>
           </div>
         )}
