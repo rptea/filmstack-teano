@@ -111,12 +111,67 @@ export default function Dashboard(props) {
     alert(error.message || 'Unable to update favorite right now.');
   }
 } 
+  async function handleDeleteMovie(movieId) {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this movie?"
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const response = await fetch (`/api/movies/${movieId}`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to delete movie");
+      }
+
+      setSavedMovies((prev) =>
+        prev.filter((movie) => movie._id !== movieId)
+      );
+    } catch (error) {
+      alert(error.message || "Unable to delete movie right now.");
+    }
+  }
   
   const filteredMovies =
     movieFilter === "favorites"
       ? savedMovies.filter((movie) => movie.favorite)
       : savedMovies;
   
+  async function handleRatingChange(movieId, newRating) {
+    try {
+      const response = await fetch (`/api/movies/${movieId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ rating: Number(newRating) }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to update rating.");
+      }
+
+      setSavedMovies((prev) =>
+        prev.map((movie) =>
+          movie._id === movieId
+            ? { ...movie, rating: Number(newRating) }
+            : movie
+          )
+        );
+    } catch (error) {
+      alert(error.message || "Unable to update rating right now.");
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -237,8 +292,7 @@ export default function Dashboard(props) {
                     <h3>{movie.title}</h3>
 
                     <p>
-                      {movie.releaseDate || "Release date unavailable"}
-                    </p>
+                      {movie.releaseDate || "Release date unavailable"}</p>
 
                     <label style={{ display: "block", marginTop: "0.5rem" }}>
                       Status:{" "}
@@ -254,6 +308,23 @@ export default function Dashboard(props) {
                       </select>
                     </label>
 
+                    <label style={{ display: "block", marginTop: "0.5rem" }}>
+                      Rating:{" "}
+                      <select 
+                        value={movie.rating ?? ""}
+                        onChange={(e) =>
+                          handleRatingChange(movie._id, e.target.value)
+                        }
+                      >
+                        <option value="">Not rated</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                    </label>
+
                     <button
                       type="button"
                       style={{ marginTop: "0.5rem" }}
@@ -262,6 +333,14 @@ export default function Dashboard(props) {
                       }
                     >
                       {movie.favorite ? "Unfavorite" : "Favorite"}
+                    </button>
+
+                    <button
+                      type="button"
+                      style={{ marginTop: "0.5rem" }}
+                      onClick={() => handleDeleteMovie(movie._id)}
+                    >
+                      Delete Movie
                     </button>
 
                     <p>

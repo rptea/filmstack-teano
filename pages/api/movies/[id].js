@@ -25,7 +25,7 @@ async function handler(req, res) {
 
   if (method === 'PATCH') {
     try {
-      const { status, favorite } = req.body;
+      const { status, favorite, rating } = req.body;
 
       const update = {};
 
@@ -41,6 +41,17 @@ async function handler(req, res) {
 
       if (typeof favorite !== 'undefined') {
         update.favorite = Boolean(favorite);
+      }
+
+      if (typeof rating !== 'undefined') {
+        const numericRating = Number(rating);
+
+        if (!Number.isInteger(numericRating) || numericRating < 1 || numericRating > 5) {
+            return res.status(400).json({ error: 'Rating must be a number from 1 to 5.'
+            });
+        }
+
+        update.rating = numericRating;
       }
 
       if (Object.keys(update).length === 0) {
@@ -65,6 +76,28 @@ async function handler(req, res) {
     } catch (error) {
       return res.status(500).json({ error: 'Failed to update movie.' });
     }
+  }
+
+  if (method === 'DELETE') {
+    try {
+        const deletedMovie = await Movie.findOneAndDelete({
+            _id: id,
+            userId, 
+        });
+
+        if (!deletedMovie) {
+            return res
+                .status (404)
+                .json({ error: 'Movie not found for this user.'});
+        }
+
+        return res.status(200).json({
+            message: 'Movie deleted successfully.',
+            deletedMovie,
+        });
+    }   catch (error) {
+        return res.status(500).json({ error: 'Failed to delete movie.' });
+    }   
   }
 
   return res.status(405).json({ error: 'Method not allowed.' });
