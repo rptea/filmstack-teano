@@ -1,0 +1,101 @@
+.resultsHeader {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.resultsCount {
+  color: #667085;
+  font-weight: 600;
+}
+
+.movieMeta {
+  font-size: 0.95rem;
+  color: #667085;
+  margin: 0;
+}
+
+.movieSection {
+  margin-top: 3rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.searchPoster {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  object-fit: cover;
+  background: #e5e7eb;
+}
+
+.posterFallback {
+  width: 100%;
+  min-height: 320px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e7eb;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.searchActions {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+}
+
+.saveButton {
+  margin-top: 0.75rem;
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  background: #4412f7;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.saveButton:hover {
+  transform: translateY(-1px);
+  opacity: 0.96;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+}
+
+.infoGrid {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.infoCard {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.infoCard h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
+  color: #111827;
+}
+
+.infoCard p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.6;
+  font-size: 1rem;
+}

@@ -57,8 +57,8 @@ export default function Login(props) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Login | CineTrack</title>
-        <meta name="description" content="Login to your CineTrack account." />
+        <title>Login | Filmstack</title>
+        <meta name="description" content="Login to your FilmStack account." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

@@ -16,37 +16,30 @@
 }
 
 .footer {
-  width: 100%;
-  margin-top: 4rem;
-  padding: 2rem 0;
   border-top: 1px solid #dbe3ea;
-  display: flex;
-  justify-content: center;
-  background: #f8fafc
+  background: #4412f7;
+  padding: 1.5rem;
+  margin-top: 3rem;
 }
 
 .footerContent {
-  width: 100%;
   max-width: 1200px;
+  margin: 0 auto;
   text-align: center;
 }
 
 .footerBrand {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #111827;
+  font-weight: 800;
+  color: #e8eefc;
 }
 
 .footerText {
-  margin: 0/5rem 0 0;
-  font-size: 0.95rem;
-  color: #475467;
-  line-height: 1.5;
+  color: #e8eefc;
+  margin-top: 0.4rem;
 }
 
 .title a {
-  color: #0070f3;
+  color: #4412f7;
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -61,7 +54,7 @@
   margin: 0;
   line-height: 1.15;
   font-size: 2.5rem;
-  color: #111827
+  color: #4412f7
 }
 
 .title,
@@ -154,290 +147,6 @@
   background-color: #111827;
 }
 
-.movieSection {
-  margin-top: 3rem;
-  width: 100%;
-  max-width: 1200px;
-}
-
-.searchPoster {
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  object-fit: cover;
-  background: #e5e7eb;
-}
-
-.posterFallback {
-  width: 100%;
-  min-height: 320px;
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #e5e7eb;
-  color: #6b7280;
-  font-weight: 600;
-}
-
-.filterBar {
-  display: flex;
-  gap: 0.75rem;
-  margin: 1rem 0 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.filterButton {
-  border: none;
-  border-radius: 999px;
-  padding: 0.65rem 1rem;
-  background: #e8eefc;
-  color: #1f3c88;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.filterButton:hover {
-  background: #d7e3ff;
-  transform: translateY(-1px);
-}
-
-.activeFilter {
-  background: #0070f3;
-  color: white;
-}
-
-.saveButton {
-  margin-top: 0.75rem;
-  border: none;
-  border-radius: 10px;
-  padding: 0.8rem 1rem;
-  background: #0070f3;
-  color: #ffffff;
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
-}
-
-.saveButton:hover {
-  transform: translateY(-1px);
-  opacity: 0.96;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
-}
-
-.movieGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-  width: 100%;
-  margin-top: 1.5rem;
-}
-
-.movieCard {
-  border-radius: 16px;
-  padding: 1rem;
-  border: 1px solid #dbe3ea;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  background: #ffffff;
-  transition: 
-    transform 0.2s ease,
-    box-shadow 0.2s ease
-    border-color 0.2s ease;
-}
-
-.movieCard:hover {
-  transform: translateY(-4px);
-  border-color: #bfd5ea;
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
-}
-
-.moviePoster {
-  width: 100%;
-  max-width: 220px;
-  border-radius: 12px;
-  object-fit: cover;
-  align-self: center;
-}
-
-.movieTitle {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0;
-  color: #111827;
-}
-
-.movieMeta {
-  font-size: 0.95rem;
-  color: #667085;
-  margin: 0;
-}
-
-.fieldLabel {
-  display: block;
-  margin-top: 0.35rem;
-  font-weight: 600;
-  color: #1f2937;
-  font-size: 0.95rem;
-}
-
-.select,
-.textarea {
-  width: 100%;
-  padding: 0.85rem 0.95rem;
-  border: 1px solid #cfd8e3;
-  border-radius: 12px;
-  font-size: 1rem;
-  color: #111827;
-  background: #ffffff;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
-}
-
-.select:focus,
-.textarea:focus {
-  outline: none;
-  border-color: #0070f3;
-  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.18)
-}
-
-.textarea {
-  resize: vertical;
-  min-height: 90px;
-}
-
-.actionRow {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
-}
-
-.favoriteButton,
-.deleteButton,
-.closeButton {
-  border: none;
-  border-radius: 10px;
-  padding: 0.7rem 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: 
-    transform 0.2s ease, 
-    opacity 0.2s ease, 
-    box-shadow 0.2s ease;
-}
-
-.favoriteButton {
-  background: #fef3c7;
-  color: #92400e;
-  transition: 
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.favoriteButton:hover {
-  transform: translateY(-1px);
-  opacity: 0.95;
-  box-shadow: 0 6px 18px rgba(146, 64, 14, 0.25);
-}
-
-.deleteButton {
-  background: #fee2e2;
-  color: #b91c1c;
-  transition: 
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.deleteButton:hover {
-  transform: translateY(-1px);
-  opacity: 0.95;
-  box-shadow: 0 6px 18px rgba(185, 28, 28, 0.25);
-}
-
-.movieOverview {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #475467;
-  margin: 0.25rem 0 0;
-}
-
-.modalOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.55);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  z-index: 1000;
-}
-
-.modalContent {
-  background: white;
-  color: #111827;
-  width: 100%;
-  max-width: 760px;
-  max-height: 90vh;
-  overflow-y: auto;
-  border-radius: 18px;
-  padding: 1.5rem;
-  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.18);
-  position: relative;
-}
-
-.closeButton {
-  background: #111827;
-  color: white;
-  margin-bottom: 1rem;
-  transition: 
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.modalPoster {
-  width: 200px;
-  max-width: 100%;
-  border-radius: 14px;
-  margin: 0 auto 1rem;
-  display: block;
-}
-
-.modalText p {
-  margin: 0.5rem 0;
-  line-height: 1.6;
-}
-
 .heroSection {
   width: 100%;
   max-width: 900px;
@@ -451,7 +160,7 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #0070f3;
+  color: #111827;
 }
 
 .heroTitle {
@@ -459,7 +168,7 @@
   max-width: 850px;
   font-size: 3rem;
   line-height: 1.15;
-  color: #111827;
+  color: #4412f7;
 }
 
 .heroText {
@@ -476,12 +185,6 @@
   gap: 1rem;
   flex-wrap: wrap;
   margin-top: 2rem;
-}
-
-.searchActions {
-  width: 100%;
-  max-width: 700px;
-  display: flex;
 }
 
 .primaryButton,
@@ -505,12 +208,12 @@
 }
 
 .primaryButton {
-  background: #0070f3;
+  background: #4412f7;
   color: white;
 }
 
 .secondaryButton {
-  background: #e5e7eb;
+  background: #ebe5ea;
   color: #111827;
 }
 
@@ -518,36 +221,6 @@
 .secondaryButton:hover {
   transform: translateY(-1px);
   opacity: 0.96;
-}
-
-.infoGrid {
-  width: 100%;
-  max-width: 1100px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.infoCard {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-}
-
-.infoCard h2 {
-  margin: 0 0 0.75rem;
-  font-size: 1.2rem;
-  color: #111827;
-}
-
-.infoCard p {
-  margin: 0;
-  color: #4b5563;
-  line-height: 1.6;
-  font-size: 1rem;
 }
 
 .authSection {
@@ -607,7 +280,7 @@
 
 .authInput:focus {
   outline: none;
-  border-color: #0070f3;
+  border-color: #4412f7;
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.18);
 }
 
@@ -616,7 +289,7 @@
   border: none;
   border-radius: 12px;
   padding: 0.9rem 1rem;
-  background: #0070f3;
+  background: #4412f7;
   color: white;
   font-weight: 700;
   font-size: 1rem;
@@ -648,7 +321,7 @@
 }
 
 .inlineLink {
-  color: #0070f3;
+  color: #4412f7;
   text-decoration: none;
   font-weight: 600;
 }
@@ -663,20 +336,8 @@
     flex-direction: column;
   }
 
-  .movieCard {
-    padding: 0.9rem;
-  }
-
-  .modalContent {
-    padding: 1rem;
-  }
-
   .title {
     font-size: 2rem;
-  }
-
-  .movieTitle {
-    font-size: 1.1rem;
   }
 
     .heroTitle {

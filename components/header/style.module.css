@@ -1,4 +1,6 @@
 .header {
+  background: #4412f7;
+  color: #e8eefc;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -27,7 +29,7 @@
 .brand {
   font-size: 1.3rem;
   font-weight: 800;
-  color: #111827;
+  color: #e8eefc;
   text-decoration: none;
 }
 
@@ -45,18 +47,18 @@
 
 .navLink {
   text-decoration: none;
-  color: #374151;
+  color: #e8eefc;
   font-weight: 600;
   transition: color 0.2s ease;
 }
 
 .navLink:hover,
 .navLink:focus {
-  color: #0070f3;
+  color: #4412f7;
 }
 
 .welcome {
-  color: #4b5563;
+  color: #e8eefc;
   font-weight: 500;
 }
 
@@ -83,8 +85,8 @@
 }
 
 .logoutButton {
-  background: #111827;
-  color: white;
+  background: #fafafa;
+  color: #4412f7;
 }
 
 .loginButton:hover,

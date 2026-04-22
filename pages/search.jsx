@@ -2,7 +2,8 @@ import Head from "next/head";
 import { useState } from "react";
 import Header from "../components/header";
 import SearchBar from "../components/search-bar";
-import styles from "../styles/Home.module.css";
+import homeStyles from "../styles/Home.module.css";
+import searchStyles from "../styles/Search.module.css";
 import Link from "next/link";
 
 export default function Search(props) {
@@ -68,70 +69,89 @@ export default function Search(props) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={homeStyles.container}>
       <Head>
         <title>Search | Filmstack</title>
         <meta name="description" content="Search for movies on Filmstack." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header isLoggedIn={props?.isLoggedIn} username={props?.user?.username} />
-
-      <main className={styles.main}>
-        <section className={styles.heroSection}>
-          <p className={styles.heroTag}>Movie search</p>
-          <h1 className={styles.heroTitle}>Find movies to add to your tracker</h1>
-          <p className={styles.heroText}>
-            Search for a title and browse movie results.
+      <Header 
+        isLoggedIn={props?.isLoggedIn} 
+        username={props?.user?.username} 
+      />
+      <main className={homeStyles.main}>
+        <section className={homeStyles.heroSection}>
+          <p className={homeStyles.heroTag}>Movie search</p>
+          <h1 className={homeStyles.heroTitle}>Find movies to add to your Library.</h1>
+          <p className={homeStyles.heroText}>
+            Search for a title, browse movie results, and save movies to FilmStack.
           </p>
         </section>
 
-        <div className={styles.searchActions}>
-          <Link href="/dashboard" className={styles.secondaryButton}>
-            Got to Dashboard
-          </Link>
-        </div>
-        <SearchBar onSearch={handleSearch} />
+          <div className={searchStyles.searchActions}>
+            <Link 
+              href="/dashboard" 
+              className={homeStyles.secondaryButton}
+            >
+              Got to My Library
+            </Link>
+          </div>
 
-        {loading && <p className={styles.authText}>Searching...</p>}
-        {error && <p className={styles.authError}>{error}</p>}
+          <SearchBar onSearch={handleSearch} />
 
-        {searched && !loading && results.length === 0 && !error && (
-          <p className={styles.authText}>No movies found.</p>
-        )}
+          {loading && <p 
+            className={homeStyles.authText}>Searching...</p>}
+          {error && <p 
+            className={homeStyles.authError}>{error}</p>}
 
-        <section className={styles.infoGrid}>
-          {results.map((movie) => (
-            <article key={movie.id} className={styles.infoCard}>
-              {movie.poster_path ? (
-                <img 
-                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                  alt={`$movie.title} poster`}
-                  className={styles.searchPoster}
-                />
-              ) : (
-                <div className={styles.posterFallback}>No Poster</div>
-              )}
-              
-              <h2>{movie.title}</h2>
+          {searched && !loading && results.length === 0 && !error && (
+            <p className={homeStyles.authText}>No movies found.</p>
+          )}
 
-              <p className={styles.movieMeta}>
-                {movie.release_date || "No release date"}
+          {results.length > 0 && (
+            <div className={searchStyles.resultsHeader}>
+              <p className={searchStyles.resultsCount}>
+                {results.length} result{results.length === 1 ? "" : "s"} found
               </p>
-              <p>
-                {movie.overview
-                  ? movie.overview.slice(0, 160) + "..."
-                  : "No overview available."}
-              </p>
+            </div>
+          )}
 
-              <button
-                type="button"
-                className={styles.saveButton}
-                onClick={() => handleSaveMovie(movie)}
-              >
-                Save Movie
-              </button>
-            </article>
+          <section className={searchStyles.infoGrid}>
+            {results.map((movie) => (
+              <article 
+                key={movie.id} 
+                className={searchStyles.infoCard}>
+                {movie.poster_path ? (
+                  <img 
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={`${movie.title} poster`}
+                    className={searchStyles.searchPoster}
+                  />
+                ) : (
+                  <div className={searchStyles.posterFallback}>No Poster</div>
+                )}
+                
+                <h2>{movie.title}</h2>
+
+                <p className={homeStyles.movieMeta}>
+                  {movie.release_date || "No release date"}
+                </p>
+
+                <p>
+                  {movie.overview
+                    ? movie.overview.slice(0, 160) + "..."
+                    : "No overview available."}
+                </p>
+
+                <button
+                  type="button"
+                  className={searchStyles.saveButton}
+                  onClick={() => handleSaveMovie(movie)}
+                >
+                  Save to Library
+                </button>
+              </article>
           ))}
         </section>
       </main>

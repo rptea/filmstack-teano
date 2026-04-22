@@ -27,7 +27,7 @@ export default function Home(props) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>CineTrack</title>
+        <title>FilmStack</title>
         <meta
           name="description"
           content="Track movies, save favorites, rate films, and write personal notes."
@@ -39,7 +39,7 @@ export default function Home(props) {
 
       <main className={styles.main}>
         <section className={styles.heroSection}>
-          <p className={styles.heroTag}>Personal movie tracker</p>
+          <p className={styles.heroTag}>Your movie library</p>
 
           <h1 className={styles.heroTitle}>
             Track movies you want to watch, rate what you love, and keep notes in one place.
@@ -54,16 +54,12 @@ export default function Home(props) {
             {props.isLoggedIn ? (
               <>
                 <Link href="/dashboard" className={styles.primaryButton}>
-                  Go to Dashboard
+                  Open My Library
                 </Link>
 
-                <button
-                  type="button"
-                  className={styles.secondaryButton}
-                  onClick={logout}
-                >
-                  Logout
-                </button>
+                <Link href="/dashboard" className={styles.secondaryButton}>
+                  Search Movies
+                </Link>
               </>
             ) : (
               <>
@@ -72,7 +68,7 @@ export default function Home(props) {
                 </Link>
 
                 <Link href="/login" className={styles.secondaryButton}>
-                  Login
+                  Sign In
                 </Link>
               </>
             )}
@@ -99,7 +95,7 @@ export default function Home(props) {
 
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
-          <p className={styles.footerBrand}>CineTrack</p>
+          <p className={styles.footerBrand}>FilmStack</p>
           <p className={styles.footerText}>
             Track movies, save favorites, rate films, and write notes.
           </p>
