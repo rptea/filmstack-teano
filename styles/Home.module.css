@@ -16,8 +16,9 @@
 }
 
 .footer {
+  width: 100%;
   border-top: 1px solid #dbe3ea;
-  background: #4412f7;
+  background: #111827;
   padding: 1.5rem;
   margin-top: 3rem;
 }
@@ -34,9 +35,10 @@
 }
 
 .footerText {
-  color: #e8eefc;
+  color: #667085;
   margin-top: 0.4rem;
 }
+
 
 .title a {
   color: #4412f7;
@@ -168,7 +170,7 @@
   max-width: 850px;
   font-size: 3rem;
   line-height: 1.15;
-  color: #4412f7;
+  color: #1f3c88;
 }
 
 .heroText {
@@ -208,7 +210,7 @@
 }
 
 .primaryButton {
-  background: #4412f7;
+  background: #1f3c88;
   color: white;
 }
 
@@ -280,7 +282,7 @@
 
 .authInput:focus {
   outline: none;
-  border-color: #4412f7;
+  border-color: #1f3c88;
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.18);
 }
 
@@ -289,7 +291,7 @@
   border: none;
   border-radius: 12px;
   padding: 0.9rem 1rem;
-  background: #4412f7;
+  background: #1f3c88;
   color: white;
   font-weight: 700;
   font-size: 1rem;
@@ -321,7 +323,7 @@
 }
 
 .inlineLink {
-  color: #4412f7;
+  color: #1f3c88;
   text-decoration: none;
   font-weight: 600;
 }

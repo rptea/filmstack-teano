@@ -23,7 +23,7 @@
 
 .searchInput:focus {
   outline: none;
-  border-color: #0070f3;
+  border-color: #1f3c88;
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.18);
 }
 
@@ -31,7 +31,7 @@
   border: none;
   border-radius: 12px;
   padding: 0.95rem 1.2rem;
-  background: #0070f3;
+  background: #1f3c88;
   color: #ffffff;
   font-weight: 700;
   cursor: pointer;

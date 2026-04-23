@@ -15,7 +15,7 @@
 .title {
   font-size: 2rem;
   font-weight: 800;
-  color: #4412f7;
+  color: #1f3c88;
   text-align: center;
   margin-bottom: 1rem;
 }
@@ -228,7 +228,7 @@
 }
 
 .activeFilter {
-  background: #4412f7;
+  background: #1f3c88;
   color: white;
 }
 
@@ -308,7 +308,7 @@
 .select:focus,
 .textarea:focus {
   outline: none;
-  border-color: #4412f7;
+  border-color: #1f3c88;
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.18);
 }
 

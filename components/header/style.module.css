@@ -1,5 +1,5 @@
 .header {
-  background: #4412f7;
+  background: #111827;
   color: #e8eefc;
   width: 100%;
   max-width: 1200px;
@@ -54,7 +54,7 @@
 
 .navLink:hover,
 .navLink:focus {
-  color: #4412f7;
+  color: #436bcf;
 }
 
 .welcome {
@@ -80,13 +80,13 @@
 }
 
 .loginButton {
-  background: #0070f3;
+  background: #1f3c88;
   color: white;
 }
 
 .logoutButton {
   background: #fafafa;
-  color: #4412f7;
+  color: #436bcf;
 }
 
 .loginButton:hover,

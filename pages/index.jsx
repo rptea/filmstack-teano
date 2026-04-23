@@ -42,12 +42,11 @@ export default function Home(props) {
           <p className={styles.heroTag}>Your movie library</p>
 
           <h1 className={styles.heroTitle}>
-            Track movies you want to watch, rate what you love, and keep notes in one place.
+            Save, rate, and keep notes all in one place.
           </h1>
 
           <p className={styles.heroText}>
-            FilmStack helps you organize your watchlist, mark favorites, add ratings,
-            and save personal thoughts about every movie.
+            FilmStack gives you a simple way to track what to watch next, organize what you've seen, and build a personal movie collection :)
           </p>
 
           <div className={styles.heroActions}>

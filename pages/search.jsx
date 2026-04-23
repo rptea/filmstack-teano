@@ -155,6 +155,15 @@ export default function Search(props) {
           ))}
         </section>
       </main>
+
+      <footer className={homeStyles.footer}>
+        <div className={homeStyles.footerContent}>
+          <p className={homeStyles.footerBrand}>FilmStack</p>
+          <p className={homeStyles.footerText}>
+            Track movies, save favorites, rate films, and write notes.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
