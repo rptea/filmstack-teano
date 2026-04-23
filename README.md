@@ -1,34 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FilmStack
+FilmStack is a movie tracking app build with Next.js. It lets users create an account, search for movies, save titles to a personal library, save favorites, rate movies, update watch status, and add personal notes.
+
+## Features
+- User authentication 
+- Movie search powered by an API route (TMDB)
+- Personal dashboard for saved movies
+- Favorite filtering
+- Movie status tracking (Want to Watch, Watched, Owned)
+- Personal ratings and notes for each saved title
+- Responsive layout across all pages
+
+## Tech Stack
+- Next.js
+- React
+- CSS Modules
+- Iron Session
+- Node.js
+- Vercel for deployment
+
+## Pages
+- Home: landing page with app overview and account actions
+- Search: search for movies and seve them to your library
+- Dashboard: manage saved movies, favorites, ratings, notes, and status
 
 ## Getting Started
+1. Clone the resository
+```
+git clone https://github.com/rptea/filmstack-teano.git
+cd filmstack-teano
+```
+2. Install dependencies
+```
+npm install
+```
+3. Add environmental variables
+Create a `.env.local` file in the root of the project and add the required variables.
+Example: 
+```
+TMDB_API_TOKEN=your_tmdb_api_token
+SESSION_SECRET=your_session_secret
+MONGODB_URI=your_mongodb_connection_string
+```
+- Update the variable names if your project uses different ones.
 
-First, run the development server:
-
-```bash
+4. Run the development server
+```
 npm run dev
-# or
-yarn dev
+```
+- Open http://localhost:3000 in your browser.
+
+## Project Structure
+```
+filmstack-teano/
+- components/
+- config/
+- hooks/
+- pages/
+- public/
+- styles/
+- .env.local
+- package.json
+- README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment
+FilmStack is set up to deploy well on Vercel.
+1. Push the project to GitHub.
+2. Log in to Vercel and import the `filmstack-teano` repository.
+3. Confirm the Next.js project settings that Vercel auto-detects.
+4. Add the same environment variables used in `.env.local` to the vercel project settings before deploying.
+5. Deploy and use the generated production URL from the Vercel dashboard.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Screenshots
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### Dashboard View
+![FilmStack dashboard page](./screenshots/dashboard-view.png)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Favorites List
+![FilmStack favorites list](./screenshots/favorites-list.png)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Movie Card View
+![FilmStack movie details](./screenshots/movie-card.png)

@@ -94,7 +94,7 @@ export default function Search(props) {
               href="/dashboard" 
               className={homeStyles.secondaryButton}
             >
-              Got to My Library
+              Go to My Library
             </Link>
           </div>
 
